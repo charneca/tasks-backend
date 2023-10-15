@@ -15,9 +15,16 @@ pipeline{
             environment{
                 scannerHome = tool 'SonarQube_SCANNER'
             }
-            steps{
+        steps{
                 withSonarQubeEnv('SONARQUBE_SERVER'){
                     bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://localhost:9000 -Dsonar.login=805e08d7960953bf6432b36bcc1fa358d7c34f48 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/tests/**,**/model/**,**Application.java"
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps{
+                timeout(time: 1, unit:'MINUTES'){
+                    waitForQualityGate abortpipeline: true
                 }
             }
         }
