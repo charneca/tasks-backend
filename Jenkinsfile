@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('Just a test') {
             steps{
-                bat('deu certo cara')
+                bat 'deu certo cara'
             }
         }
     }
