@@ -50,6 +50,7 @@ pipeline{
                     deploy adapters: [tomcat8(credentialsId: 'tomcat_credentials', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
+        }
         stage('functional Test') {
             steps{
                 dir('functional-test'){
