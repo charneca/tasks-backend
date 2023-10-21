@@ -42,5 +42,14 @@ pipeline{
                 }
             }
         }
+        stage('Deploy Frontend') {
+            steps{
+                dir('frontend'){
+                    git branch: 'main', credentialsId: 'git_credentials', url: 'https://github.com/charneca/tasks-frontend'
+                    bat 'mvn clean package'
+                    deploy adapters: [tomcat8(credentialsId: 'tomcat_credentials', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                }
+            }
+        }
     }
 }
